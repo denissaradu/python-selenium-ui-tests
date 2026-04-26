@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from utils.wait_utils import wait_for_element_visible
 
 class CheckoutStepTwoPage:
 	def __init__(self,driver):
@@ -15,4 +16,4 @@ class CheckoutStepTwoPage:
 		self.driver.find_element(*self.CANCEL_BUTTON).click()
 
 	def get_success_message(self):
-		return self.driver.find_element(By.CLASS_NAME,"complete-header").text
+		return wait_for_element_visible(self.driver, (By.CLASS_NAME, "complete-header")).text

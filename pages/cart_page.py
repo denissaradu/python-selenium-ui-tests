@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from utils.wait_utils import wait_for_elements_present
 
 
 class CartPage:
@@ -14,7 +15,7 @@ class CartPage:
 		self.driver.find_element(*self.OPEN_CART).click()
 
 	def get_cart_items(self):
-		return self.driver.find_elements(*self.GET_CART_ITEMS)
+		return wait_for_elements_present(self.driver, self.GET_CART_ITEMS)
 
 	def first_cart_item_name(self):
 		return self.driver.find_elements(*self.FIRST_CART_ITEM_NAME)[0].text

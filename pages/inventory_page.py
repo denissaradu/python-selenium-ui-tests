@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from utils.wait_utils import wait_for_elements_present
 
 class InventoryPage:
     def __init__(self, driver):
@@ -12,6 +13,7 @@ class InventoryPage:
         return self.driver.find_elements(*self.PRODUCTS)
 
     def add_first_product(self):
+        wait_for_elements_present(self.driver, self.PRODUCTS)
         products = self.get_products()
         products[0].find_element(*self.ADD_TO_CART).click()
 

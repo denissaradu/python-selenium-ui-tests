@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from utils.wait_utils import wait_for_element_clickable
 
 class LoginPage:
     def __init__(self, driver):
@@ -17,7 +16,7 @@ class LoginPage:
     def login(self, username, password):
         self.driver.find_element(*self.USERNAME).send_keys(username)
         self.driver.find_element(*self.PASSWORD).send_keys(password)
-        self.driver.find_element(*self.LOGIN_BTN).click()
+        wait_for_element_clickable(self.driver, self.LOGIN_BTN).click()
 
     def get_error_message(self):
         return self.driver.find_element(*self.ERROR).text
