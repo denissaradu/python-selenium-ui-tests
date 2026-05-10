@@ -8,6 +8,7 @@ class CheckoutStepOnePage:
 		self.LAST_NAME_INPUT = (By.ID,"last-name")
 		self.POSTAL_CODE_INPUT = (By.ID,"postal-code")
 		self.CONTINUE_BUTTON = (By.ID,"continue")
+		self.ERROR_MESSAGE =(By.CSS_SELECTOR,"h3[data-test='error']")
 
 	def fill_first_name(self,first_name):
 		self.driver.find_element(*self.FIRST_NAME_INPUT).send_keys(first_name)
@@ -20,4 +21,7 @@ class CheckoutStepOnePage:
 
 	def click_continue(self):
 		self.driver.find_element(*self.CONTINUE_BUTTON).click()
+
+	def get_error_message(self):
+		return self.driver.find_element(*self.ERROR_MESSAGE).text
 

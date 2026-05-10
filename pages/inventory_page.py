@@ -1,5 +1,8 @@
 from selenium.webdriver.common.by import By
 from utils.wait_utils import wait_for_elements_present
+from utils.wait_utils import wait_for_element_clickable
+from selenium.webdriver.support.ui import Select
+
 
 class InventoryPage:
     def __init__(self, driver):
@@ -8,6 +11,10 @@ class InventoryPage:
         self.PRODUCTS = (By.CLASS_NAME, "inventory_item")
         self.ADD_TO_CART = (By.CSS_SELECTOR, ".btn_inventory")
         self.CART_BADGE = (By.CLASS_NAME, "shopping_cart_badge")
+        self.OPEN_MENU = (By.ID,"react-burger-menu-btn")
+        self.CLICK_LOGOUT =(By.ID, "logout_sidebar_link")
+        self.SORT_OPTION =(By.CLASS_NAME, "product_sort_container")
+        self.PRICES =(By.CLASS_NAME, "inventory_item_price")
 
     def get_products(self):
         return self.driver.find_elements(*self.PRODUCTS)
@@ -43,4 +50,34 @@ class InventoryPage:
             added_products.append(name)
 
         return added_products
+
+
+    def open_menu(self):
+        self.driver.find_element(*self.OPEN_MENU).click()
+
+
+    def click_logout(self):
+        wait_for_element_clickable(self.driver, self.CLICK_LOGOUT).click()
+
+    def select_sort_option(self, option_value):
+        sort_dropdown = wait_for_element_clickable(self.driver, self.SORT_OPTION)
+        Select(sort_dropdown).select_by_value(option_value)
+
+
+    def get_product_prices(self):
+        products = wait_for_elements_present(self.driver, self.PRODUCTS)
+        prices = []
+
+        for product in products:
+            price = float(
+                product.find_element(By.CLASS_NAME, "inventory_item_price")
+                .text.replace("$", "")
+            )
+            prices.append(price)
+
+        return prices
+
+
+
+
 
